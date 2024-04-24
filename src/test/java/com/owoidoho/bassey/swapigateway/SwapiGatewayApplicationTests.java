@@ -10,12 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SwapiGatewayApplicationTests {
 
-	@Autowired
-	private SWAPIController swapiController;
+  @Autowired
+  private SWAPIController swapiController;
 
-	@Test
-	void contextLoads() {
-		assertThat(swapiController).isNotNull();
-	}
+  @Test
+  void contextLoads() {
+    assertThat(swapiController).isNotNull();
+  }
 
 }

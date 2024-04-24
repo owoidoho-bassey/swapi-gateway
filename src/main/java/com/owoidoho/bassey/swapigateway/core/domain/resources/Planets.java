@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the SWAPI resource for planets.
+ */
 public final class Planets extends Resource {
 
   public Planets(String path, SWAPIRepository repository) {
@@ -19,9 +22,9 @@ public final class Planets extends Resource {
 
   @Override
   @NotNull
-  protected JSONObject resolveResourceAttributes(JSONObject planetData) {
-    JSONArray residents = resolveResourceLinks(planetData.getJSONArray("residents"));
-    JSONArray films = resolveResourceLinks(planetData.getJSONArray("films"));
+  protected JSONObject resolveLinkedResources(JSONObject planetData) {
+    JSONArray residents = resolveResourcesLinks(planetData.getJSONArray("residents"));
+    JSONArray films = resolveResourcesLinks(planetData.getJSONArray("films"));
 
     JSONObject resolvedPlanetData = new JSONObject(planetData.toString());
     resolvedPlanetData.put("residents", residents);

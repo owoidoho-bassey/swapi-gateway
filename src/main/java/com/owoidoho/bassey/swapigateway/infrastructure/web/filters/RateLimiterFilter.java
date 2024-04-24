@@ -19,6 +19,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * The Rate Limiter filter implementation that limits the number of requests per period.
+ *
+ * It makes use of an Atomic counter and timestamp to implement a simple Token Bucket algorithm.
+ */
 @Component
 @Order(1)
 public class RateLimiterFilter implements Filter {
@@ -36,6 +42,11 @@ public class RateLimiterFilter implements Filter {
   ) {
     this.quota = quota;
     this.refreshPeriodSec = refreshPeriodSec;
+  }
+
+  @NotNull
+  private static String getLimiterKey(@NotNull HttpServletRequest request) {
+    return request.getRemoteAddr();
   }
 
   @Override
@@ -58,11 +69,6 @@ public class RateLimiterFilter implements Filter {
       httpResponse.setStatus(HttpStatus.SC_TOO_MANY_REQUESTS);
       httpResponse.getWriter().write(RATE_LIMITED_RESPONSE);
     }
-  }
-
-  @NotNull
-  private static String getLimiterKey(@NotNull HttpServletRequest request) {
-    return request.getRemoteAddr();
   }
 
   private static class TimedLimiter {

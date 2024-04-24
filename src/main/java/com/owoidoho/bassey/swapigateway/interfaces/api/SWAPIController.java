@@ -33,6 +33,20 @@ public class SWAPIController {
       value = {
           "/api/v1",
           "/api/v1/",
+      },
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ResponseEntity<String> getRootResource(HttpServletRequest request) {
+    JSONObject result = swapiService.getResource("", "");
+    String resultString = result.toString();
+    String requestBaseUrl = getRequestBaseUrl(request);
+    return ResponseEntity
+        .ok(replaceAllSWAPIUrls(resultString, requestBaseUrl));
+
+  }
+
+  @GetMapping(
+      value = {
           "/api/v1/{resources}/{path}",
           "/api/v1/{resources}/{path}/",
       },

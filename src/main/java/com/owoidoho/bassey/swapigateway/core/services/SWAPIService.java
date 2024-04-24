@@ -57,7 +57,7 @@ public class SWAPIService {
       int page
   ) {
     return getResourceType(resources, "")
-        .fetchPagedAndResolveAttributes(page);
+        .fetchPagedAndResolveResources(page);
   }
 
   @NotNull
@@ -69,7 +69,7 @@ public class SWAPIService {
   @NotNull
   public JSONArray getAllResolvedResources(@Nullable String resources) {
     return getResourceType(resources, "")
-        .fetchAllAndResolveAttributes();
+        .fetchAllAndResolveResources();
   }
 
   Resource getResourceType(@Nullable String resources, @Nullable String path) {

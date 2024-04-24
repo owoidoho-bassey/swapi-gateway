@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the SWAPI resource for species.
+ */
 public final class Species extends Resource {
 
   public Species(String path, SWAPIRepository repository) {
@@ -19,10 +22,10 @@ public final class Species extends Resource {
 
   @Override
   @NotNull
-  protected JSONObject resolveResourceAttributes(JSONObject specieData) {
+  protected JSONObject resolveLinkedResources(JSONObject specieData) {
     JSONObject homeworld = resolveResourceLink(specieData.getString("homeworld"));
-    JSONArray people = resolveResourceLinks(specieData.getJSONArray("people"));
-    JSONArray films = resolveResourceLinks(specieData.getJSONArray("films"));
+    JSONArray people = resolveResourcesLinks(specieData.getJSONArray("people"));
+    JSONArray films = resolveResourcesLinks(specieData.getJSONArray("films"));
 
     JSONObject resolvedSpecieData = new JSONObject(specieData.toString());
     resolvedSpecieData.put("homeworld", homeworld);

@@ -22,9 +22,11 @@ import org.springframework.web.client.RestClient;
 public class SWAPICachedRestClientTest {
 
   private final RestClient.Builder restClientBuilder = RestClient.builder();
-  private final MockRestServiceServer server = MockRestServiceServer.bindTo(restClientBuilder).build();
+  private final MockRestServiceServer server = MockRestServiceServer.bindTo(restClientBuilder)
+      .build();
   private final RestClient restClient = restClientBuilder.build();
-  private final SWAPICachedRestClient subject = new SWAPICachedRestClient(SWAPI_BASE_URL, restClient);
+  private final SWAPICachedRestClient subject = new SWAPICachedRestClient(SWAPI_BASE_URL,
+      restClient);
 
   @BeforeEach
   void setup() {
@@ -71,7 +73,7 @@ public class SWAPICachedRestClientTest {
       result = subject.fetchResource(resource, "1");
       assertEquals(unPretty(expectedResponse), result.toString());
       server.verify();
-   }
+    }
   }
 
   private String swapiUrl(String resource) {

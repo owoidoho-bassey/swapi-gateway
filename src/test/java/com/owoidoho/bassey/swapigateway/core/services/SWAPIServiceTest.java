@@ -47,8 +47,66 @@ public class SWAPIServiceTest {
   private final SWAPIService swapiService =
       new SWAPIService(repository);
 
+  public static Stream<Arguments> testDataProvider() {
+    SWAPIRepository repository = mock(SWAPIRepository.class);
+    return Stream.of(
+        Arguments.of(
+            "people",
+            "1",
+            new People("1", repository)
+        ),
+        Arguments.of(
+            "planets",
+            "1",
+            new Planets("1", repository)
+        ),
+        Arguments.of(
+            "films",
+            "1",
+            new Films("1", repository)
+        ),
+        Arguments.of(
+            "species",
+            "1",
+            new Species("1", repository)
+        ),
+        Arguments.of(
+            "vehicles",
+            "schema",
+            new Vehicles("schema", repository)
+        ),
+        Arguments.of(
+            "starships",
+            "1",
+            new Starships("1", repository)
+        ),
+        Arguments.of(
+            "",
+            "",
+            new Root(repository)
+        ),
+        Arguments.of(
+            "people",
+            "",
+            new People("", repository)
+        ),
+        Arguments.of(
+            "planets",
+            "",
+            new Planets("", repository)
+        ),
+        Arguments.of(
+            "films",
+            "",
+            new Films("", repository)
+        )
+    );
+  }
+
   @BeforeEach
   void setup() {
+    when(repository.fetchResource("", ""))
+        .thenReturn(new JSONObject(ROOTS));
     when(repository.fetchResource("people", "1"))
         .thenReturn(new JSONObject(PEOPLE_1));
     when(repository.fetchResource("films", "1"))
@@ -67,6 +125,14 @@ public class SWAPIServiceTest {
         .thenReturn(new JSONObject(VEHICLES_PAGE_1));
     when(repository.fetchResource("vehicles", "?page=2"))
         .thenReturn(new JSONObject(VEHICLES_PAGE_2));
+  }
+
+  @Test
+  public void getRootResourceWorks() {
+    JSONObject actualResponse =
+        swapiService.getResource("", "");
+
+    assertEquals(unPretty(ROOTS), actualResponse.toString());
   }
 
   @Test
@@ -131,62 +197,6 @@ public class SWAPIServiceTest {
   void testGetResourceTypeWithInvalidResource() {
     assertThrowsExactly(ResourceNotFoundException.class,
         () -> swapiService.getResourceType("invalid", "1")
-    );
-  }
-
-  public static Stream<Arguments> testDataProvider() {
-    SWAPIRepository repository = mock(SWAPIRepository.class);
-    return Stream.of(
-        Arguments.of(
-            "people",
-            "1",
-            new People("1", repository)
-        ),
-        Arguments.of(
-            "planets",
-            "1",
-            new Planets("1", repository)
-        ),
-        Arguments.of(
-            "films",
-            "1",
-            new Films("1", repository)
-        ),
-        Arguments.of(
-            "species",
-            "1",
-            new Species("1", repository)
-        ),
-        Arguments.of(
-            "vehicles",
-            "schema",
-            new Vehicles("schema", repository)
-        ),
-        Arguments.of(
-            "starships",
-            "1",
-            new Starships("1", repository)
-        ),
-        Arguments.of(
-            "",
-            "",
-            new Root(repository)
-        ),
-        Arguments.of(
-            "people",
-            "",
-            new People("", repository)
-        ),
-        Arguments.of(
-            "planets",
-            "",
-            new Planets("", repository)
-        ),
-        Arguments.of(
-            "films",
-            "",
-            new Films("", repository)
-        )
     );
   }
 

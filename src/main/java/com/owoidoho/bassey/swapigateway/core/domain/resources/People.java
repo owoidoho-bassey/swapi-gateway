@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the SWAPI resource for people.
+ */
 public final class People extends AggregateResource {
 
   public People(String path, SWAPIRepository repository) {
@@ -19,12 +22,12 @@ public final class People extends AggregateResource {
 
   @Override
   @NotNull
-  protected JSONObject resolveResourceAttributes(JSONObject personData) {
-    JSONArray films = resolveResourceLinks(personData.getJSONArray("films"));
+  protected JSONObject resolveLinkedResources(JSONObject personData) {
+    JSONArray films = resolveResourcesLinks(personData.getJSONArray("films"));
     JSONObject planets = resolveResourceLink(personData.getString("homeworld"));
-    JSONArray species = resolveResourceLinks(personData.getJSONArray("species"));
-    JSONArray starships = resolveResourceLinks(personData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourceLinks(personData.getJSONArray("vehicles"));
+    JSONArray species = resolveResourcesLinks(personData.getJSONArray("species"));
+    JSONArray starships = resolveResourcesLinks(personData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResourcesLinks(personData.getJSONArray("vehicles"));
 
     JSONObject resolvedPersonData = new JSONObject(personData.toString());
     resolvedPersonData.put("films", films);
@@ -43,11 +46,11 @@ public final class People extends AggregateResource {
     }
 
     JSONObject personData = fetch();
-    JSONArray films = resolveResourceLinks(personData.getJSONArray("films"));
+    JSONArray films = resolveResourcesLinks(personData.getJSONArray("films"));
     JSONObject planet = resolveResourceLink(personData.getString("homeworld"));
-    JSONArray species = resolveResourceLinks(personData.getJSONArray("species"));
-    JSONArray starships = resolveResourceLinks(personData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourceLinks(personData.getJSONArray("vehicles"));
+    JSONArray species = resolveResourcesLinks(personData.getJSONArray("species"));
+    JSONArray starships = resolveResourcesLinks(personData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResourcesLinks(personData.getJSONArray("vehicles"));
 
     JSONObject resolvedPersonData = new JSONObject(personData.toString());
     resolvedPersonData.put("films", films);

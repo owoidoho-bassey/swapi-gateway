@@ -19,6 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
+
+/**
+ * The SWAPI repository implementation that caches responses from SWAPI.
+ * The cache is a simple in-memory cache that stores the response from SWAPI and doesn't expire any item.
+ * Cache is only cleared on re-start.
+ */
 @Service
 public class SWAPICachedRestClient implements SWAPIRepository {
 

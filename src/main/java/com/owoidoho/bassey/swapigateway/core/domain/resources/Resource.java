@@ -6,6 +6,12 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the base class for all SWAPI resources.
+ *
+ * It provides methods for fetching resources, fetching all resources, and resolving linked resources.
+ * It takes a repository parameter for fetching resources from a storage.
+ */
 public abstract class Resource {
 
   protected String path;
@@ -27,7 +33,7 @@ public abstract class Resource {
   @NotNull
   public JSONObject fetchAndResolveAttributes() {
     JSONObject resourceData = fetch();
-    return resolveResourceAttributes(resourceData);
+    return resolveLinkedResources(resourceData);
   }
 
   public JSONObject fetchPaged(int page) {
@@ -35,13 +41,13 @@ public abstract class Resource {
   }
 
   @NotNull
-  public JSONObject fetchPagedAndResolveAttributes(int page) {
+  public JSONObject fetchPagedAndResolveResources(int page) {
     JSONObject resourceData = fetchPaged(page);
     JSONArray resources = resourceData.getJSONArray("results");
     JSONArray resolvedResources = new JSONArray();
 
     resources.forEach(resource -> {
-      JSONObject resolvedResource = resolveResourceAttributes((JSONObject) resource);
+      JSONObject resolvedResource = resolveLinkedResources((JSONObject) resource);
       resolvedResources.put(resolvedResource);
     });
 
@@ -55,8 +61,8 @@ public abstract class Resource {
   }
 
   @NotNull
-  public JSONArray fetchAllAndResolveAttributes() {
-    return getAllResources(this::fetchPagedAndResolveAttributes);
+  public JSONArray fetchAllAndResolveResources() {
+    return getAllResources(this::fetchPagedAndResolveResources);
   }
 
   @NotNull
@@ -81,7 +87,7 @@ public abstract class Resource {
   protected abstract String name();
 
   @NotNull
-  protected abstract JSONObject resolveResourceAttributes(JSONObject resourceData);
+  protected abstract JSONObject resolveLinkedResources(JSONObject resourceData);
 
   @NotNull
   protected String path() {
@@ -93,7 +99,7 @@ public abstract class Resource {
     return resource.fetchMinimal();
   }
 
-  protected JSONArray resolveResourceLinks(@NotNull JSONArray resourceLinks) {
+  protected JSONArray resolveResourcesLinks(@NotNull JSONArray resourceLinks) {
     JSONArray resolvedResources = new JSONArray();
     resourceLinks.forEach(resourceLink -> {
       Resource resource = extractResourceFromUrl(resourceLink.toString());

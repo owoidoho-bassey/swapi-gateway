@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the SWAPI resource for vehicles.
+ */
 public final class Vehicles extends Resource {
 
   public Vehicles(String path, SWAPIRepository repository) {
@@ -20,9 +23,9 @@ public final class Vehicles extends Resource {
 
   @Override
   @NotNull
-  protected JSONObject resolveResourceAttributes(JSONObject vehicleData) {
-    JSONArray pilots = resolveResourceLinks(vehicleData.getJSONArray("pilots"));
-    JSONArray films = resolveResourceLinks(vehicleData.getJSONArray("films"));
+  protected JSONObject resolveLinkedResources(JSONObject vehicleData) {
+    JSONArray pilots = resolveResourcesLinks(vehicleData.getJSONArray("pilots"));
+    JSONArray films = resolveResourcesLinks(vehicleData.getJSONArray("films"));
 
     JSONObject resolvedVehicleData = new JSONObject(vehicleData.toString());
     resolvedVehicleData.put("pilots", pilots);

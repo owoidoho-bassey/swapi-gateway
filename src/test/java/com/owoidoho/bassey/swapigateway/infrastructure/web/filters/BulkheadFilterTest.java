@@ -35,7 +35,6 @@ public class BulkheadFilterTest {
     int numberOfRequests = quota + extra;
     var bulkheadFilter = new BulkheadFilter(quota);
 
-
     var chain = createMockedFilterChain();
     var requests = createMockRequests(numberOfRequests);
     var responses = createMockResponse(numberOfRequests);

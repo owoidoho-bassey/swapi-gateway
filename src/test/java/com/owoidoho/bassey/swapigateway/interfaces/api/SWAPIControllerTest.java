@@ -2,6 +2,7 @@ package com.owoidoho.bassey.swapigateway.interfaces.api;
 
 import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_1;
 import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_1_RESOLVED;
+import static com.owoidoho.bassey.swapigateway.TestData.ROOTS;
 import static com.owoidoho.bassey.swapigateway.TestData.SWAPI_BASE_URL;
 import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_ALL;
 import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_ALL_RESOLVED;
@@ -34,7 +35,9 @@ public class SWAPIControllerTest {
   private SWAPIService swapiService;
 
   @BeforeEach
-  void setup(){
+  void setup() {
+    when(swapiService.getResource("", ""))
+        .thenReturn(new JSONObject(ROOTS));
     when(swapiService.getResource("people", "1"))
         .thenReturn(new JSONObject(PEOPLE_1));
     when(swapiService.getResolvedResource("people", "1"))
@@ -50,6 +53,21 @@ public class SWAPIControllerTest {
   }
 
   @Test
+  public void testGetRootResource() throws Exception {
+    var expectedResponse = new JSONObject(
+        ROOTS.replaceAll(SWAPI_BASE_URL, "http://localhost/api")
+    ).toString();
+
+    mockMvc
+        .perform(get("/api/v1"))
+        .andExpect(status().isOk())
+        .andExpect(content().json(expectedResponse))
+        .andReturn();
+
+    verify(swapiService, times(1)).getResource("", "");
+  }
+
+  @Test
   public void testGetResource() throws Exception {
     var expectedResponse = new JSONObject(
         PEOPLE_1.replaceAll(SWAPI_BASE_URL, "http://localhost/api")
@@ -59,7 +77,7 @@ public class SWAPIControllerTest {
         .perform(get("/api/v1/people/1"))
         .andExpect(status().isOk())
         .andExpect(content().json(expectedResponse))
-            .andReturn();
+        .andReturn();
 
     verify(swapiService, times(1)).getResource("people", "1");
   }

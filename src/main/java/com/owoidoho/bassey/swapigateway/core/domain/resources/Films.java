@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the SWAPI resource for films.
+ */
 public final class Films extends AggregateResource {
 
   public Films(String path, SWAPIRepository repository) {
@@ -19,12 +22,12 @@ public final class Films extends AggregateResource {
 
   @Override
   @NotNull
-  protected JSONObject resolveResourceAttributes(@NotNull JSONObject filmData) {
-    JSONArray characters = resolveResourceLinks(filmData.getJSONArray("characters"));
-    JSONArray planets = resolveResourceLinks(filmData.getJSONArray("planets"));
-    JSONArray species = resolveResourceLinks(filmData.getJSONArray("species"));
-    JSONArray starships = resolveResourceLinks(filmData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourceLinks(filmData.getJSONArray("vehicles"));
+  protected JSONObject resolveLinkedResources(@NotNull JSONObject filmData) {
+    JSONArray characters = resolveResourcesLinks(filmData.getJSONArray("characters"));
+    JSONArray planets = resolveResourcesLinks(filmData.getJSONArray("planets"));
+    JSONArray species = resolveResourcesLinks(filmData.getJSONArray("species"));
+    JSONArray starships = resolveResourcesLinks(filmData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResourcesLinks(filmData.getJSONArray("vehicles"));
 
     JSONObject resolvedFilmData = new JSONObject(filmData.toString());
     resolvedFilmData.put("characters", characters);
@@ -52,11 +55,11 @@ public final class Films extends AggregateResource {
     }
 
     JSONObject filmData = fetch();
-    JSONArray characters = resolveResourceLinks(filmData.getJSONArray("characters"));
-    JSONArray planets = resolveResourceLinks(filmData.getJSONArray("planets"));
-    JSONArray species = resolveResourceLinks(filmData.getJSONArray("species"));
-    JSONArray starships = resolveResourceLinks(filmData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourceLinks(filmData.getJSONArray("vehicles"));
+    JSONArray characters = resolveResourcesLinks(filmData.getJSONArray("characters"));
+    JSONArray planets = resolveResourcesLinks(filmData.getJSONArray("planets"));
+    JSONArray species = resolveResourcesLinks(filmData.getJSONArray("species"));
+    JSONArray starships = resolveResourcesLinks(filmData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResourcesLinks(filmData.getJSONArray("vehicles"));
 
     JSONObject resolvedFilmData = new JSONObject(filmData.toString());
     resolvedFilmData.put("characters", characters);

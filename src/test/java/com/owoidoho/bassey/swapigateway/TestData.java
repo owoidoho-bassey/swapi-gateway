@@ -9,25 +9,7 @@ import org.json.JSONObject;
 
 public final class TestData {
 
-  private TestData(){}
-
-  public static String unPretty(@NotNull String json) {
-    return json.charAt(0) == '{' ?
-        new JSONObject(json).toString() :
-        new JSONArray(json).toString();
-  }
   public static final String SWAPI_BASE_URL = "https://swapi.py4e.com/api";
-
-  public static final Map<String, String> RESOURCE_DATA_MAP = new HashMap<>() {{
-    put("", ROOTS);
-    put("people", PEOPLE_1);
-    put("films", FILMS_1);
-    put("planets", PLANETS_1);
-    put("species", SPECIES_1);
-    put("vehicles", VEHICLES_1);
-    put("starships", STARSHIP_1);
-  }};
-
   public static final String ROOTS = """
       {
           "people": "https://swapi.py4e.com/api/people/",
@@ -38,7 +20,6 @@ public final class TestData {
           "starships": "https://swapi.py4e.com/api/starships/"
       }
       """;
-
   public static final String PEOPLE_1 = """
       {
           "name": "Luke Skywalker",
@@ -67,7 +48,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/people/1/"
       }
       """;
-
   public static final String FILMS_1 = """
       {
           "title": "A New Hope",
@@ -96,7 +76,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/films/1/"
       }
       """;
-
   public static final String PLANETS_1 = """
       {
           "name": "Tatooine",
@@ -119,7 +98,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/planets/1/"
       }
       """;
-
   public static final String SPECIES_1 = """
       {
           "name": "Human",
@@ -143,7 +121,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/species/1/"
       }
       """;
-
   public static final String VEHICLES_1 = """
       {
           "name": "Sand Crawler",
@@ -168,7 +145,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/vehicles/1/"
       }
       """;
-
   public static final String VEHICLES_2 = """
       {
           "name": "T-16 skyhopper",
@@ -193,7 +169,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/vehicles/2/"
       }
       """;
-
   public static final String STARSHIP_1 = """
       {
           "name": "CR90 corvette",
@@ -218,7 +193,15 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/starships/1/"
       }
       """;
-
+  public static final Map<String, String> RESOURCE_DATA_MAP = new HashMap<>() {{
+    put("", ROOTS);
+    put("people", PEOPLE_1);
+    put("films", FILMS_1);
+    put("planets", PLANETS_1);
+    put("species", SPECIES_1);
+    put("vehicles", VEHICLES_1);
+    put("starships", STARSHIP_1);
+  }};
   public static final String PEOPLE_1_RESOLVED = """
       {
           "films": [
@@ -262,7 +245,6 @@ public final class TestData {
           "height": "172"
       }
       """;
-
   public static final String VEHICLES_PAGE_1 = """
       {
           "count": 39,
@@ -294,7 +276,6 @@ public final class TestData {
           ]
       }
       """;
-
   public static final String VEHICLES_PAGE_2 = """
       {
           "count": 39,
@@ -326,7 +307,6 @@ public final class TestData {
           ]
       }
       """;
-
   public static final String VEHICLES_1_RESOLVED = """
       {
           "name": "Sand Crawler",
@@ -431,7 +411,6 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/vehicles/1/"
       }
       """;
-
   public static final String VEHICLES_2_RESOLVED = """
       {
           "name": "T-16 skyhopper",
@@ -536,15 +515,13 @@ public final class TestData {
           "url": "https://swapi.py4e.com/api/vehicles/2/"
       }
       """;
-
-      public static final String VEHICLES_PAGE_1_RESOLVED =
-          new JSONObject()
+  public static final String VEHICLES_PAGE_1_RESOLVED =
+      new JSONObject()
           .put("count", 39)
           .put("next", "https://swapi.py4e.com/api/vehicles/?page=2")
           .put("previous", JSONObject.NULL)
           .put("results", new JSONArray().put(new JSONObject(VEHICLES_1_RESOLVED)))
           .toString();
-
   public static final String VEHICLES_PAGE_2_RESOLVED =
       new JSONObject()
           .put("count", 39)
@@ -552,19 +529,26 @@ public final class TestData {
           .put("previous", JSONObject.NULL)
           .put("results", new JSONArray().put(new JSONObject(VEHICLES_2_RESOLVED)))
           .toString();
-
-    public static final String VEHICLES_ALL =
-        new JSONArray(
-            List.of(
-            new JSONObject(VEHICLES_1),
-            new JSONObject(VEHICLES_2)
-        )).toString();
-
+  public static final String VEHICLES_ALL =
+      new JSONArray(
+          List.of(
+              new JSONObject(VEHICLES_1),
+              new JSONObject(VEHICLES_2)
+          )).toString();
   public static final String VEHICLES_ALL_RESOLVED =
       new JSONArray(
           List.of(
               new JSONObject(VEHICLES_1_RESOLVED),
               new JSONObject(VEHICLES_2_RESOLVED)
           )).toString();
+
+  private TestData() {
+  }
+
+  public static String unPretty(@NotNull String json) {
+    return json.charAt(0) == '{' ?
+        new JSONObject(json).toString() :
+        new JSONArray(json).toString();
+  }
 
 }

@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Represents the SWAPI resource for starships.
+ */
 public final class Starships extends Resource {
 
   public Starships(String path, SWAPIRepository repository) {
@@ -19,9 +22,9 @@ public final class Starships extends Resource {
 
   @Override
   @NotNull
-  protected JSONObject resolveResourceAttributes(JSONObject starshipData) {
-    JSONArray pilots = resolveResourceLinks(starshipData.getJSONArray("pilots"));
-    JSONArray films = resolveResourceLinks(starshipData.getJSONArray("films"));
+  protected JSONObject resolveLinkedResources(JSONObject starshipData) {
+    JSONArray pilots = resolveResourcesLinks(starshipData.getJSONArray("pilots"));
+    JSONArray films = resolveResourcesLinks(starshipData.getJSONArray("films"));
 
     JSONObject resolvedStarshipData = new JSONObject(starshipData.toString());
     resolvedStarshipData.put("pilots", pilots);

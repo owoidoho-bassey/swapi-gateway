@@ -17,6 +17,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * The Bulkhead filter implementation that limits the number of concurrent requests.
+ *
+ * It makes use of a Semaphore set to permit only the configured number of concurrent requests.
+ */
 @Component
 @Order(2)
 public class BulkheadFilter implements Filter {
@@ -30,6 +36,11 @@ public class BulkheadFilter implements Filter {
 
   public BulkheadFilter(@Value("${bulkhead.maxConcurrentCalls:5}") int quota) {
     this.quota = quota;
+  }
+
+  @NotNull
+  private static String getLimiterKey(HttpServletRequest request) {
+    return request.getRemoteAddr();
   }
 
   @Override
@@ -56,10 +67,5 @@ public class BulkheadFilter implements Filter {
     } finally {
       limiter.release();
     }
-  }
-
-  @NotNull
-  private static String getLimiterKey(HttpServletRequest request) {
-    return request.getRemoteAddr();
   }
 }

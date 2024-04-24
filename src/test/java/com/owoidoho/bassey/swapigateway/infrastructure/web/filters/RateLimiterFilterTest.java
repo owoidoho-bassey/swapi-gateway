@@ -37,7 +37,6 @@ public class RateLimiterFilterTest {
     var requests = createMockRequests(numberOfRequests);
     var responses = createMockResponse(numberOfRequests);
 
-
     var futures = new CompletableFuture[numberOfRequests];
     for (int i = 0; i < numberOfRequests; i++) {
       int finalI = i;
