@@ -162,8 +162,8 @@ public class SWAPIControllerTest {
   @Test
   public void testResourceNotFound() throws Exception {
     when(swapiService.getResource("unknown", "1"))
-        .thenThrow(new ResourceNotFoundException("Resource not found"
-            , new JSONObject().put("detail", "Not found")
+        .thenThrow(new ResourceNotFoundException(
+            new JSONObject().put("detail", "Not found")
         ));
 
     mockMvc

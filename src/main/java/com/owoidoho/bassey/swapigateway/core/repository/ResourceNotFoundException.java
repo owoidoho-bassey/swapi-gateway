@@ -6,8 +6,8 @@ public class ResourceNotFoundException extends RuntimeException {
 
   private final JSONObject response;
 
-  public ResourceNotFoundException(String message, JSONObject response) {
-    super(message);
+  public ResourceNotFoundException(JSONObject response) {
+    super("Resource not found");
     this.response = response;
   }
 

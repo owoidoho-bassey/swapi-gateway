@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * The Bulkhead filter implementation that limits the number of concurrent requests.
- *
+ * <p>
  * It makes use of a Semaphore set to permit only the configured number of concurrent requests.
  */
 @Component

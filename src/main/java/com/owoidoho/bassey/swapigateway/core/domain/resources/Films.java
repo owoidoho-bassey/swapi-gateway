@@ -23,11 +23,11 @@ public final class Films extends AggregateResource {
   @Override
   @NotNull
   protected JSONObject resolveLinkedResources(@NotNull JSONObject filmData) {
-    JSONArray characters = resolveResourcesLinks(filmData.getJSONArray("characters"));
-    JSONArray planets = resolveResourcesLinks(filmData.getJSONArray("planets"));
-    JSONArray species = resolveResourcesLinks(filmData.getJSONArray("species"));
-    JSONArray starships = resolveResourcesLinks(filmData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourcesLinks(filmData.getJSONArray("vehicles"));
+    JSONArray characters = resolveResources(filmData.getJSONArray("characters"));
+    JSONArray planets = resolveResources(filmData.getJSONArray("planets"));
+    JSONArray species = resolveResources(filmData.getJSONArray("species"));
+    JSONArray starships = resolveResources(filmData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResources(filmData.getJSONArray("vehicles"));
 
     JSONObject resolvedFilmData = new JSONObject(filmData.toString());
     resolvedFilmData.put("characters", characters);
@@ -55,11 +55,11 @@ public final class Films extends AggregateResource {
     }
 
     JSONObject filmData = fetch();
-    JSONArray characters = resolveResourcesLinks(filmData.getJSONArray("characters"));
-    JSONArray planets = resolveResourcesLinks(filmData.getJSONArray("planets"));
-    JSONArray species = resolveResourcesLinks(filmData.getJSONArray("species"));
-    JSONArray starships = resolveResourcesLinks(filmData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourcesLinks(filmData.getJSONArray("vehicles"));
+    JSONArray characters = resolveResources(filmData.getJSONArray("characters"));
+    JSONArray planets = resolveResources(filmData.getJSONArray("planets"));
+    JSONArray species = resolveResources(filmData.getJSONArray("species"));
+    JSONArray starships = resolveResources(filmData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResources(filmData.getJSONArray("vehicles"));
 
     JSONObject resolvedFilmData = new JSONObject(filmData.toString());
     resolvedFilmData.put("characters", characters);

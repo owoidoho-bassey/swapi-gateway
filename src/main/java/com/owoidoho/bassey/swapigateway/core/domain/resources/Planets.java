@@ -23,8 +23,8 @@ public final class Planets extends Resource {
   @Override
   @NotNull
   protected JSONObject resolveLinkedResources(JSONObject planetData) {
-    JSONArray residents = resolveResourcesLinks(planetData.getJSONArray("residents"));
-    JSONArray films = resolveResourcesLinks(planetData.getJSONArray("films"));
+    JSONArray residents = resolveResources(planetData.getJSONArray("residents"));
+    JSONArray films = resolveResources(planetData.getJSONArray("films"));
 
     JSONObject resolvedPlanetData = new JSONObject(planetData.toString());
     resolvedPlanetData.put("residents", residents);

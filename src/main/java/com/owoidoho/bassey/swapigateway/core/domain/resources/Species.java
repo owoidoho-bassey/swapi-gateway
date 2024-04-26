@@ -23,9 +23,11 @@ public final class Species extends Resource {
   @Override
   @NotNull
   protected JSONObject resolveLinkedResources(JSONObject specieData) {
-    JSONObject homeworld = resolveResourceLink(specieData.getString("homeworld"));
-    JSONArray people = resolveResourcesLinks(specieData.getJSONArray("people"));
-    JSONArray films = resolveResourcesLinks(specieData.getJSONArray("films"));
+    String homeworldValue = specieData.optString("homeworld");
+    Object homeworld = homeworldValue == null || homeworldValue.isBlank() ? JSONObject.NULL
+        : resolveResource(homeworldValue);
+    JSONArray people = resolveResources(specieData.getJSONArray("people"));
+    JSONArray films = resolveResources(specieData.getJSONArray("films"));
 
     JSONObject resolvedSpecieData = new JSONObject(specieData.toString());
     resolvedSpecieData.put("homeworld", homeworld);

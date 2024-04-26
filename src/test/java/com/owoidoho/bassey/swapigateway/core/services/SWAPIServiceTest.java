@@ -1,13 +1,29 @@
 package com.owoidoho.bassey.swapigateway.core.services;
 
 import static com.owoidoho.bassey.swapigateway.TestData.FILMS_1;
+import static com.owoidoho.bassey.swapigateway.TestData.FILMS_2;
+import static com.owoidoho.bassey.swapigateway.TestData.FILMS_PAGE_1;
+import static com.owoidoho.bassey.swapigateway.TestData.FILMS_PAGE_2;
 import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_1;
 import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_1_RESOLVED;
+import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_2;
+import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_PAGE_1;
+import static com.owoidoho.bassey.swapigateway.TestData.PEOPLE_PAGE_2;
 import static com.owoidoho.bassey.swapigateway.TestData.PLANETS_1;
+import static com.owoidoho.bassey.swapigateway.TestData.PLANETS_2;
+import static com.owoidoho.bassey.swapigateway.TestData.PLANETS_PAGE_1;
+import static com.owoidoho.bassey.swapigateway.TestData.PLANETS_PAGE_2;
 import static com.owoidoho.bassey.swapigateway.TestData.ROOTS;
 import static com.owoidoho.bassey.swapigateway.TestData.SPECIES_1;
-import static com.owoidoho.bassey.swapigateway.TestData.STARSHIP_1;
+import static com.owoidoho.bassey.swapigateway.TestData.SPECIES_2;
+import static com.owoidoho.bassey.swapigateway.TestData.SPECIES_PAGE_1;
+import static com.owoidoho.bassey.swapigateway.TestData.SPECIES_PAGE_2;
+import static com.owoidoho.bassey.swapigateway.TestData.STARSHIPS_1;
+import static com.owoidoho.bassey.swapigateway.TestData.STARSHIPS_2;
+import static com.owoidoho.bassey.swapigateway.TestData.STARSHIPS_PAGE_1;
+import static com.owoidoho.bassey.swapigateway.TestData.STARSHIPS_PAGE_2;
 import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_1;
+import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_2;
 import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_ALL;
 import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_ALL_RESOLVED;
 import static com.owoidoho.bassey.swapigateway.TestData.VEHICLES_PAGE_1;
@@ -109,22 +125,54 @@ public class SWAPIServiceTest {
         .thenReturn(new JSONObject(ROOTS));
     when(repository.fetchResource("people", "1"))
         .thenReturn(new JSONObject(PEOPLE_1));
+    when(repository.fetchResource("people", "2"))
+        .thenReturn(new JSONObject(PEOPLE_2));
     when(repository.fetchResource("films", "1"))
         .thenReturn(new JSONObject(FILMS_1));
+    when(repository.fetchResource("films", "2"))
+        .thenReturn(new JSONObject(FILMS_2));
     when(repository.fetchResource("planets", "1"))
         .thenReturn(new JSONObject(PLANETS_1));
+    when(repository.fetchResource("planets", "2"))
+        .thenReturn(new JSONObject(PLANETS_2));
     when(repository.fetchResource("species", "1"))
         .thenReturn(new JSONObject(SPECIES_1));
+    when(repository.fetchResource("species", "2"))
+        .thenReturn(new JSONObject(SPECIES_2));
     when(repository.fetchResource("vehicles", "1"))
         .thenReturn(new JSONObject(VEHICLES_1));
+    when(repository.fetchResource("vehicles", "2"))
+        .thenReturn(new JSONObject(VEHICLES_2));
     when(repository.fetchResource("starships", "1"))
-        .thenReturn(new JSONObject(STARSHIP_1));
+        .thenReturn(new JSONObject(STARSHIPS_1));
+    when(repository.fetchResource("starships", "2"))
+        .thenReturn(new JSONObject(STARSHIPS_2));
     when(repository.fetchResource("", ""))
         .thenReturn(new JSONObject(ROOTS));
+    when(repository.fetchResource("people", "?page=1"))
+        .thenReturn(new JSONObject(PEOPLE_PAGE_1));
+    when(repository.fetchResource("people", "?page=2"))
+        .thenReturn(new JSONObject(PEOPLE_PAGE_2));
+    when(repository.fetchResource("films", "?page=1"))
+        .thenReturn(new JSONObject(FILMS_PAGE_1));
+    when(repository.fetchResource("films", "?page=2"))
+        .thenReturn(new JSONObject(FILMS_PAGE_2));
+    when(repository.fetchResource("planets", "?page=1"))
+        .thenReturn(new JSONObject(PLANETS_PAGE_1));
+    when(repository.fetchResource("planets", "?page=2"))
+        .thenReturn(new JSONObject(PLANETS_PAGE_2));
+    when(repository.fetchResource("species", "?page=1"))
+        .thenReturn(new JSONObject(SPECIES_PAGE_1));
+    when(repository.fetchResource("species", "?page=2"))
+        .thenReturn(new JSONObject(SPECIES_PAGE_2));
     when(repository.fetchResource("vehicles", "?page=1"))
         .thenReturn(new JSONObject(VEHICLES_PAGE_1));
     when(repository.fetchResource("vehicles", "?page=2"))
         .thenReturn(new JSONObject(VEHICLES_PAGE_2));
+    when(repository.fetchResource("starships", "?page=1"))
+        .thenReturn(new JSONObject(STARSHIPS_PAGE_1));
+    when(repository.fetchResource("starships", "?page=2"))
+        .thenReturn(new JSONObject(STARSHIPS_PAGE_2));
   }
 
   @Test

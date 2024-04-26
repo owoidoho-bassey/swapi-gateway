@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 /**
  * Represents the base class for all SWAPI resources.
- *
- * It provides methods for fetching resources, fetching all resources, and resolving linked resources.
- * It takes a repository parameter for fetching resources from a storage.
+ * <p>
+ * It provides methods for fetching resources, fetching all resources, and resolving linked
+ * resources. It takes a repository parameter for fetching resources from a storage.
  */
 public abstract class Resource {
 
@@ -31,7 +31,7 @@ public abstract class Resource {
   }
 
   @NotNull
-  public JSONObject fetchAndResolveAttributes() {
+  public JSONObject fetchAndResolveResources() {
     JSONObject resourceData = fetch();
     return resolveLinkedResources(resourceData);
   }
@@ -94,12 +94,16 @@ public abstract class Resource {
     return path;
   }
 
-  protected JSONObject resolveResourceLink(@NotNull String resourceLink) {
+  protected JSONObject resolveResource(@NotNull String resourceLink) {
     Resource resource = extractResourceFromUrl(resourceLink);
-    return resource.fetchMinimal();
+    if (resource instanceof AggregateResource aggregateResource) {
+      return aggregateResource.fetchRecursively(this);
+    } else {
+      return resource.fetchMinimal();
+    }
   }
 
-  protected JSONArray resolveResourcesLinks(@NotNull JSONArray resourceLinks) {
+  protected JSONArray resolveResources(@NotNull JSONArray resourceLinks) {
     JSONArray resolvedResources = new JSONArray();
     resourceLinks.forEach(resourceLink -> {
       Resource resource = extractResourceFromUrl(resourceLink.toString());
@@ -134,7 +138,7 @@ public abstract class Resource {
       case "species" -> new Species(urlParts[idIndex], repository);
       case "vehicles" -> new Vehicles(urlParts[idIndex], repository);
       case "starships" -> new Starships(urlParts[idIndex], repository);
-      default -> throw new ResourceFormatException("Invalid url specified in resource field");
+      default -> throw new ResourceUnknownException("Invalid url specified in resource field");
     };
   }
 }

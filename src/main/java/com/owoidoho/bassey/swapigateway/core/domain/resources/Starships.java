@@ -23,8 +23,8 @@ public final class Starships extends Resource {
   @Override
   @NotNull
   protected JSONObject resolveLinkedResources(JSONObject starshipData) {
-    JSONArray pilots = resolveResourcesLinks(starshipData.getJSONArray("pilots"));
-    JSONArray films = resolveResourcesLinks(starshipData.getJSONArray("films"));
+    JSONArray pilots = resolveResources(starshipData.getJSONArray("pilots"));
+    JSONArray films = resolveResources(starshipData.getJSONArray("films"));
 
     JSONObject resolvedStarshipData = new JSONObject(starshipData.toString());
     resolvedStarshipData.put("pilots", pilots);

@@ -24,8 +24,8 @@ public final class Vehicles extends Resource {
   @Override
   @NotNull
   protected JSONObject resolveLinkedResources(JSONObject vehicleData) {
-    JSONArray pilots = resolveResourcesLinks(vehicleData.getJSONArray("pilots"));
-    JSONArray films = resolveResourcesLinks(vehicleData.getJSONArray("films"));
+    JSONArray pilots = resolveResources(vehicleData.getJSONArray("pilots"));
+    JSONArray films = resolveResources(vehicleData.getJSONArray("films"));
 
     JSONObject resolvedVehicleData = new JSONObject(vehicleData.toString());
     resolvedVehicleData.put("pilots", pilots);

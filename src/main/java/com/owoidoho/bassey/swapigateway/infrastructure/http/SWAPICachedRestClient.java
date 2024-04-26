@@ -21,9 +21,9 @@ import org.springframework.web.client.RestClientException;
 
 
 /**
- * The SWAPI repository implementation that caches responses from SWAPI.
- * The cache is a simple in-memory cache that stores the response from SWAPI and doesn't expire any item.
- * Cache is only cleared on re-start.
+ * The SWAPI repository implementation that caches responses from SWAPI. The cache is a simple
+ * in-memory cache that stores the response from SWAPI and doesn't expire any item. Cache is only
+ * cleared on re-start.
  */
 @Service
 public class SWAPICachedRestClient implements SWAPIRepository {
@@ -46,8 +46,8 @@ public class SWAPICachedRestClient implements SWAPIRepository {
   @NotNull
   public JSONObject fetchResource(@NotNull String resource, @NotNull String path) {
     String url = buildUrl(resource, path);
-    JSONObject result = cache.get(url);
-    if (result == null) {
+    JSONObject result = readFromCache(url);
+    if (result.isEmpty()) {
       result = getResourceFromSWAPI(url);
       writeResponseToCache(url, result);
     }
@@ -65,7 +65,7 @@ public class SWAPICachedRestClient implements SWAPIRepository {
             var responseBody = response.bodyTo(String.class);
             var responseJson = responseBody == null ? EMPTY_JSON : new JSONObject(responseBody);
             if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-              throw new ResourceNotFoundException("Resource not found", responseJson);
+              throw new ResourceNotFoundException(responseJson);
             }
             return responseJson;
           });
@@ -74,8 +74,22 @@ public class SWAPICachedRestClient implements SWAPIRepository {
     }
   }
 
+  @NotNull
+  private JSONObject readFromCache(@NotNull String url) {
+    JSONObject cachedResource = cache.get(url);
+    if (cachedResource != null) {
+      return new JSONObject(cachedResource.toString());
+    }
+    return EMPTY_JSON;
+  }
+
   private void writeResponseToCache(@NotNull String url, @NotNull JSONObject response) {
-    JSONArray results = response.optJSONArray("results");
+    if (response.isEmpty()) {
+      return;
+    }
+
+    JSONObject responseCopy = new JSONObject(response.toString());
+    JSONArray results = responseCopy.optJSONArray("results");
     if (results != null) {
       results.forEach(result -> {
         JSONObject resultObject = (JSONObject) result;
@@ -84,9 +98,9 @@ public class SWAPICachedRestClient implements SWAPIRepository {
       });
     }
 
-    String returnedUrl = response.optString("url");
+    String returnedUrl = responseCopy.optString("url");
     returnedUrl = isBlank(returnedUrl) ? url : returnedUrl;
-    cache.put(trim(returnedUrl), response);
+    cache.put(trim(returnedUrl), responseCopy);
   }
 
   @NotNull

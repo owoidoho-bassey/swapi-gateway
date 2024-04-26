@@ -23,11 +23,11 @@ public final class People extends AggregateResource {
   @Override
   @NotNull
   protected JSONObject resolveLinkedResources(JSONObject personData) {
-    JSONArray films = resolveResourcesLinks(personData.getJSONArray("films"));
-    JSONObject planets = resolveResourceLink(personData.getString("homeworld"));
-    JSONArray species = resolveResourcesLinks(personData.getJSONArray("species"));
-    JSONArray starships = resolveResourcesLinks(personData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourcesLinks(personData.getJSONArray("vehicles"));
+    JSONArray films = resolveResources(personData.getJSONArray("films"));
+    JSONObject planets = resolveResource(personData.getString("homeworld"));
+    JSONArray species = resolveResources(personData.getJSONArray("species"));
+    JSONArray starships = resolveResources(personData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResources(personData.getJSONArray("vehicles"));
 
     JSONObject resolvedPersonData = new JSONObject(personData.toString());
     resolvedPersonData.put("films", films);
@@ -46,11 +46,11 @@ public final class People extends AggregateResource {
     }
 
     JSONObject personData = fetch();
-    JSONArray films = resolveResourcesLinks(personData.getJSONArray("films"));
-    JSONObject planet = resolveResourceLink(personData.getString("homeworld"));
-    JSONArray species = resolveResourcesLinks(personData.getJSONArray("species"));
-    JSONArray starships = resolveResourcesLinks(personData.getJSONArray("starships"));
-    JSONArray vehicles = resolveResourcesLinks(personData.getJSONArray("vehicles"));
+    JSONArray films = resolveResources(personData.getJSONArray("films"));
+    JSONObject planet = resolveResource(personData.getString("homeworld"));
+    JSONArray species = resolveResources(personData.getJSONArray("species"));
+    JSONArray starships = resolveResources(personData.getJSONArray("starships"));
+    JSONArray vehicles = resolveResources(personData.getJSONArray("vehicles"));
 
     JSONObject resolvedPersonData = new JSONObject(personData.toString());
     resolvedPersonData.put("films", films);

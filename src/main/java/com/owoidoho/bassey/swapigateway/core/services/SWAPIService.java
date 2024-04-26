@@ -30,7 +30,8 @@ public class SWAPIService {
       @Nullable String resources,
       @Nullable String path
   ) {
-    return getResourceType(resources, path).fetch();
+    return getResourceType(resources, path)
+        .fetch();
   }
 
   @NotNull
@@ -39,7 +40,7 @@ public class SWAPIService {
       @Nullable String path
   ) {
     return getResourceType(resources, path)
-        .fetchAndResolveAttributes();
+        .fetchAndResolveResources();
   }
 
   @NotNull
@@ -84,8 +85,9 @@ public class SWAPIService {
       case "vehicles" -> new Vehicles(path, repository);
       case "starships" -> new Starships(path, repository);
       case "" -> new Root(repository);
-      default -> throw new ResourceNotFoundException("Resource not found",
-          new JSONObject().put("detail", "Not found"));
+      default -> throw new ResourceNotFoundException(
+          new JSONObject().put("detail", "Not found")
+      );
     };
   }
 

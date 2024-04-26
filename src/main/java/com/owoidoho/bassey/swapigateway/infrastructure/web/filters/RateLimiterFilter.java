@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * The Rate Limiter filter implementation that limits the number of requests per period.
- *
+ * <p>
  * It makes use of an Atomic counter and timestamp to implement a simple Token Bucket algorithm.
  */
 @Component
